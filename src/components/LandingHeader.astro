@@ -1,0 +1,208 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<header
+  id="Landing-header"
+  class="py-4 px-10 flex items-center fixed top-0 w-full justify-between z-40 fade-in"
+  data-header-color="black">
+  <div class="flex flex-grow basis-0">
+    <a href="/"><Logo /></a>
+  </div>
+  <nav class="hidden xl:flex">
+    <ul
+      class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:font-semibold [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:text-current">
+      <li><a href="#model-s">Model S</a></li>
+      <li><a href="#model-3">Model 3</a></li>
+      <li><a href="#model-x">Model X</a></li>
+      <li><a href="#model-y">Model Y</a></li>
+      <li><a href="#powerwall">Powerwall</a></li>
+      <li><a href="#carga">Carga</a></li>
+    </ul>
+  </nav>
+
+  <nav class="flex flex-grow basis-0 justify-end hidden xl:flex">
+    <ul
+      class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:font-semibold [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:text-current">
+      <li><a href="">Soporte</a></li>
+      <li><a href="">Tienda</a></li>
+      <li><a href="">Cuenta</a></li>
+      <li class="menu">
+        <a href="">Menú</a>
+      </li>
+    </ul>
+  </nav>
+
+  <nav class="xl:hidden flex items-center">
+    <button id="menu-toggle" class="text-white focus:outline-none">
+      <svg
+        class="h-6 w-6"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor">
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          stroke-width="2"
+          d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </nav>
+
+  <div
+    id="mobile-menu"
+    class="fixed inset-y-0 left-0 w-48 bg-white z-50 transform -translate-x-full overflow-y-auto ease-in-out transition-all duration-300">
+    <div class="flex items-center justify-end px-4 py-4">
+      <button id="menu-close" class="text-gray-600 focus:outline-none">
+        <svg
+          class="h-6 w-6 hover:text-[#A7B4B4]"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor">
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M6 18L18 6M6 6l12 12"></path>
+        </svg>
+      </button>
+    </div>
+
+    <ul class="flex items-center flex-col text-sm text-gray-600">
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#model-s" class="block px-4 py-2">Model S</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#model-3" class="block px-4 py-2">Model 3</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#model-x" class="block px-4 py-2">Model X</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#model-y" class="block px-4 py-2">Model Y</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#powerwall" class="block px-4 py-2">Powerwall</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="#carga" class="block px-4 py-2">Carga</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="" class="block px-4 py-2">Soporte</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="" class="block px-4 py-2">Tienda</a>
+      </li>
+      <li class="w-full hover:text-[#A7B4B4] text-center">
+        <a href="" class="block px-4 py-2">Cuenta</a>
+      </li>
+    </ul>
+  </div>
+
+  <div
+    id="menu-backdrop"
+    class=`absolute bg-black/5 backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-500 ease-in-out opacity-0 -z-10 shadow-sm`>
+  </div>
+  <a href="#inicio"> <button id="myBtn" title="Go to top">↑</button></a>
+</header>
+
+<script>
+  //MENU MOBILE
+
+  let menuToggle = document.getElementById("menu-toggle");
+  let menuClose = document.getElementById("menu-close");
+  let mobileMenu = document.getElementById("mobile-menu");
+  let menuBackdrop = document.getElementById("menu-backdrop");
+  let menuItems = document.querySelectorAll("#mobile-menu a");
+
+  function closeMobileMenu() {
+    mobileMenu.classList.remove("translate-x-0");
+    menuBackdrop.classList.remove("opacity-100", "pointer-events-auto");
+  }
+
+  menuToggle.addEventListener("click", function () {
+    mobileMenu.classList.add("translate-x-0");
+    menuBackdrop.classList.add("opacity-100", "pointer-events-auto");
+  });
+
+  menuClose.addEventListener("click", closeMobileMenu);
+
+  menuItems.forEach(function (menuItem) {
+    menuItem.addEventListener("click", closeMobileMenu);
+  });
+
+  menuBackdrop.addEventListener("click", closeMobileMenu);
+</script>
+
+<script>
+  const listItem = document.querySelectorAll("#Landing-header li");
+  const menuBackDrop = document.querySelector("#menu-backdrop") as HTMLElement;
+
+  listItem.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      const { left, top, width, height } = item.getBoundingClientRect();
+
+      menuBackDrop.style.setProperty("--left", `${left}px`);
+      menuBackDrop.style.setProperty("--top", `${top}px`);
+      menuBackDrop.style.setProperty("--width", `${width}px`);
+      menuBackDrop.style.setProperty("--height", `${height}px`);
+
+      menuBackDrop.style.opacity = "1";
+    });
+
+    item.addEventListener("mouseleave", () => {
+      menuBackDrop.style.opacity = "0";
+    });
+  });
+</script>
+
+<script>
+  const header = document.querySelector("#Landing-header") as HTMLElement;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.9,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const { isIntersecting } = entry;
+      if (isIntersecting) {
+        const color = entry.target.getAttribute("data-header-color");
+        header.style.color = color;
+      }
+    });
+  }, observerOptions);
+
+  const sections = document.querySelectorAll(".landing-section");
+  sections.forEach((section) => observer.observe(section));
+</script>
+
+<style>
+  #myBtn {
+    position: fixed;
+    bottom: 20px;
+    right: 35px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: rgb(166, 168, 173, 0.25);
+    color: white;
+    cursor: pointer;
+    padding: 2px 12px;
+    border-radius: 6px;
+    font-size: 18px;
+  }
+
+  @media only screen and (max-width: 600px) {
+    #myBtn {
+      bottom: 10px;
+      right: 10px;
+    }
+  }
+
+  #myBtn:hover {
+    background-color: #555;
+  }
+</style>

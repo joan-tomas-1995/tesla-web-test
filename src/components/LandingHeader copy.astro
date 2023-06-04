@@ -1,0 +1,108 @@
+---
+import Logo from "./Logo.astro";
+---
+
+<header
+  id="Landing-header"
+  class="py-4 px-10 flex items-center fixed top-0 w-full justify-between z-40 fade-in"
+  data-header-color="black">
+  <div class="flex flex-grow basis-0">
+    <a href="/"><Logo /></a>
+  </div>
+  <nav>
+    <ul
+      class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:font-semibold [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:text-current hide-on-small-screen">
+      <li class="hide-on-small-screen"><a href="#model-s">Model S</a></li>
+      <li class="hide-on-small-screen"><a href="#model-3">Model 3</a></li>
+      <li class="hide-on-small-screen"><a href="#model-x">Model X</a></li>
+      <li class="hide-on-small-screen"><a href="#model-y">Model Y</a></li>
+      <li class="hide-on-small-screen"><a href="#powerwall">Powerwall</a></li>
+      <li class="hide-on-small-screen"><a href="#carga">Carga</a></li>
+    </ul>
+  </nav>
+  <nav class="flex flex-grow basis-0 justify-end">
+    <ul
+      class="flex text-sm [&>li>a]:transition-colors [&>li>a]:duration-500 [&>li>a]:font-semibold [&>li>a]:inline-block [&>li>a]:px-4 [&>li>a]:py-2 [&>li>a]:text-current">
+      <li class="hide-on-small-screen"><a href="">Soporte</a></li>
+      <li class="hide-on-small-screen"><a href="">Tienda</a></li>
+      <li class="hide-on-small-screen"><a href="">Cuenta</a></li>
+      <li class="menu">
+        <a
+          href="">Menú</a
+        >
+      </li>
+    </ul>
+  </nav>
+
+  <div
+    id="menu-backdrop"
+    class=`absolute bg-black/5 backdrop-blur-lg rounded left-[var(--left)] top-[var(--top)] w-[var(--width)] h-[var(--height)] transition-all duration-500 ease-in-out opacity-0 -z-10 shadow-sm`>
+  </div>
+  <a href="#inicio"> <button id="myBtn" title="Go to top">↑</button></a>
+</header>
+
+<script>
+  const listItem = document.querySelectorAll("#Landing-header li");
+  const menuBackDrop = document.querySelector("#menu-backdrop") as HTMLElement;
+
+  listItem.forEach((item) => {
+    item.addEventListener("mouseenter", () => {
+      const { left, top, width, height } = item.getBoundingClientRect();
+
+      menuBackDrop.style.setProperty("--left", `${left}px`);
+      menuBackDrop.style.setProperty("--top", `${top}px`);
+      menuBackDrop.style.setProperty("--width", `${width}px`);
+      menuBackDrop.style.setProperty("--height", `${height}px`);
+
+      menuBackDrop.style.opacity = "1";
+    });
+
+    item.addEventListener("mouseleave", () => {
+      menuBackDrop.style.opacity = "0";
+    });
+  });
+</script>
+
+<script>
+  const header = document.querySelector("#Landing-header") as HTMLElement;
+
+  const observerOptions = {
+    root: null,
+    rootMargin: "0px",
+    threshold: 0.9,
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      const { isIntersecting } = entry;
+      if (isIntersecting) {
+        const color = entry.target.getAttribute("data-header-color");
+        header.style.color = color;
+      }
+    });
+  }, observerOptions);
+
+  const sections = document.querySelectorAll(".landing-section");
+  sections.forEach((section) => observer.observe(section));
+</script>
+
+<style>
+  #myBtn {
+    position: fixed;
+    bottom: 25px;
+    right: 45px;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: rgb(166, 168, 173, 0.25);
+    color: white;
+    cursor: pointer;
+    padding: 2px 12px;
+    border-radius: 6px;
+    font-size: 18px;
+  }
+
+  #myBtn:hover {
+    background-color: #555;
+  }
+</style>
